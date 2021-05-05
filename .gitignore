@@ -1,0 +1,7 @@
+
+rest/__pycache__/*
+users/__pycache__/*
+
+users/migrations/__pycache__/*
+
+rest/.env
