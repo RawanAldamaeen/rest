@@ -1,6 +1,8 @@
 from rest_framework import generics, permissions
+from rest_framework.authtoken.models import Token
+
 from . import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, update_last_login
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -28,14 +30,14 @@ class UserCreate(generics.CreateAPIView):   # create new user view
 
 
 class UserUpdate(generics.UpdateAPIView):   # Update user data view
+    # queryset = User.objects.all()
     serializer_class = serializers.UpdateUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(request.user, data=request.data, partial=True)
+        serializer = serializers.UpdateUserSerializer(data=request.data, partial=True)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-        serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -47,3 +49,15 @@ class UserDestroy(generics.DestroyAPIView):     # Delete user view
         user_username = request.data.get('pk')
         response = super().delete(request, *args, **kwargs)
         return response
+
+
+class LoginAPIView(generics.GenericAPIView):
+
+    def post(self, request, *args, **kwargs):
+        serializer = serializers.LoginSerializers(data=request.data, context={'request': request})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        user = serializer.validated_data['user']
+        update_last_login(None, user)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({"status": status.HTTP_200_OK, "Token": token.key})
