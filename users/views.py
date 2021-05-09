@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, authentication
 from rest_framework.authtoken.models import Token
 
 from . import serializers
@@ -30,15 +30,17 @@ class UserCreate(generics.CreateAPIView):   # create new user view
 
 
 class UserUpdate(generics.UpdateAPIView):   # Update user data view
-    # queryset = User.objects.all()
+    queryset = User.objects.all()
     serializer_class = serializers.UpdateUserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+    lookup_field = 'pk'
 
-    def update(self, request, *args, **kwargs):
-        serializer = serializers.UpdateUserSerializer(data=request.data, partial=True)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    #
+    # def update(self, request, *args, **kwargs):
+    #     serializer = serializers.UpdateUserSerializer(data=request.data, partial=True)
+    #     if not serializer.is_valid():
+    #         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UserDestroy(generics.DestroyAPIView):     # Delete user view
