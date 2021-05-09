@@ -71,7 +71,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):  # User PUT request ser
         return instance
 
 
-class LoginSerializers(serializers.ModelSerializer):
+class LoginSerializers(serializers.ModelSerializer):    # User login serializer
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(validators=[validate_password],
                                        style={'input_type': 'password', 'placeholder': 'Password'},

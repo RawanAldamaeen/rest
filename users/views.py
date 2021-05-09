@@ -51,7 +51,7 @@ class UserDestroy(generics.DestroyAPIView):     # Delete user view
         return response
 
 
-class LoginAPIView(generics.GenericAPIView):
+class LoginAPIView(generics.GenericAPIView):    # User login view
 
     def post(self, request, *args, **kwargs):
         serializer = serializers.LoginSerializers(data=request.data, context={'request': request})
