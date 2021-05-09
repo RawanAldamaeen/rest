@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, authentication
 from . import serializers
 from django.contrib.auth.models import User
 from rest_framework.response import Response
@@ -28,15 +28,10 @@ class UserCreate(generics.CreateAPIView):   # create new user view
 
 
 class UserUpdate(generics.UpdateAPIView):   # Update user data view
+    queryset = User.objects.all()
     serializer_class = serializers.UpdateUserSerializer
-
-    def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(request.user, data=request.data, partial=True)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    authentication_classes = (authentication.TokenAuthentication,)
+    lookup_field = 'pk'
 
 
 class UserDestroy(generics.DestroyAPIView):     # Delete user view
