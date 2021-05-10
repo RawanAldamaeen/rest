@@ -1,4 +1,4 @@
-from rest_framework import generics, authentication, status
+from rest_framework import authentication, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.serializers import update_user_serializer
@@ -11,15 +11,8 @@ class UserUpdate(APIView):  # Update user data view
     authentication_classes = (authentication.TokenAuthentication,)
     lookup_field = 'pk'
 
-    def get_queryset(self):
-        user = User.objects.all()
-        return user
-
-    def put(self, request, *args, **kwargs):    # Perform Put request
-        print('test')
-        # user_object = self.get_object()
+    def put(self, request, *args, **kwargs):    # Perform PUT request
         data = request.data
-        print(data)
         user = User.objects.get(username=data["username"])
 
         user.username = data['username']
@@ -30,14 +23,11 @@ class UserUpdate(APIView):  # Update user data view
 
         serializer = update_user_serializer.UpdateUserSerializer(user)
 
-        return Response({"status": status.HTTP_200_OK, "data": serializer.data})
+        return Response({"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
 
-    def patch(self, request, *args, **kwargs):    # Perform Put request
+    def patch(self, request, *args, **kwargs):    # Perform PATCH request
         data = request.data
-        print('test')
         pk = self.kwargs.get('pk')
-        print(pk)
-        print(data)
         user = User.objects.get(pk=pk)
 
         user.username = data.get('username', user.username)
@@ -48,4 +38,4 @@ class UserUpdate(APIView):  # Update user data view
 
         serializer = update_user_serializer.UpdateUserSerializer(user)
 
-        return Response({"status": status.HTTP_200_OK, "data": serializer.data})
+        return Response({"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
