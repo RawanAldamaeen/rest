@@ -1,10 +1,11 @@
-from rest_framework import generics, permissions, authentication
+from rest_framework import generics
 from rest_framework.authtoken.models import Token
 
 from users.serializers import user_login_serializer
-from django.contrib.auth.models import User, update_last_login
+from django.contrib.auth.models import update_last_login
 from rest_framework.response import Response
 from rest_framework import status
+
 
 class LoginAPIView(generics.GenericAPIView):    # User login view
 
@@ -15,4 +16,4 @@ class LoginAPIView(generics.GenericAPIView):    # User login view
         user = serializer.validated_data['user']
         update_last_login(None, user)
         token, created = Token.objects.get_or_create(user=user)
-        return Response({"status": status.HTTP_200_OK, "Token": token.key})
+        return Response({"status": status.HTTP_200_OK, "Token": token.key, "meta": {}})
