@@ -3,5 +3,7 @@ rest/__pycache__/*
 users/__pycache__/*
 
 users/migrations/__pycache__/*
+users/serializers/__pycache__/*
+users/views/__pycache__/*
 
 rest/.env
