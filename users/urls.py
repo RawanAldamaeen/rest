@@ -1,16 +1,19 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from . import views
-
+from .views import user_create as user_create
+from .views import user_delete as user_delete
+from .views import users_list as user_list
+from .views import user_update as user_update
+from .views import user_details as user_deteail
+from .views import user_login as user_login
 
 urlpatterns = [
-    path('users/', views.UserList.as_view()),
-    path('users/login', views.LoginAPIView.as_view()),
-    path('users/new', views.UserCreate.as_view()),
-    path('users/<int:pk>/', views.UserDetails.as_view()),
-    path('users/<int:pk>/delete', views.UserDestroy.as_view()),
-    path('users/<int:pk>/update', views.UserUpdate.as_view()),
-
+    path('users/', user_list.UserList.as_view()),
+    path('users/login', user_login.LoginAPIView.as_view()),
+    path('users/new', user_create.UserCreate.as_view()),
+    path('users/<int:pk>/', user_deteail.UserDetails.as_view()),
+    path('users/<int:pk>/delete', user_delete.UserDestroy.as_view()),
+    path('users/<int:pk>/update', user_update.UserUpdate.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
