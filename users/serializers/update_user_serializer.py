@@ -24,9 +24,3 @@ class UpdateUserSerializer(serializers.ModelSerializer):  # User PUT request ser
 
         return super().validate(attrs)
 
-    def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
-        instance.password = validated_data.get('password', instance.password)
-        instance.email = validated_data.get('email', instance.email)
-        instance.save()
-        return instance
