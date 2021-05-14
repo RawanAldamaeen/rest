@@ -8,7 +8,7 @@ users/views/__pycache__/*
 
 post/migrations/__pycache__/*
 post/serializers/__pycache__/*
-post/views/__pycache__/*
+post/view/__pycache__/*
 post/models/__pycache__/*
 
 rest/.env
