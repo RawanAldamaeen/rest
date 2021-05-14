@@ -1,6 +1,7 @@
 
 rest/__pycache__/*
 users/__pycache__/*
+post/__pycache__/*
 
 users/migrations/__pycache__/*
 users/serializers/__pycache__/*
