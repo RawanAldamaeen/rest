@@ -9,5 +9,5 @@ class UserDestroy(generics.DestroyAPIView):     # Delete user view
 
     def delete(self, request, *args, **kwargs):
         user_username = request.data.get('pk')
-        response = super().delete(request, *args, **kwargs)
-        return Response({"status": status.HTTP_200_OK, 'meta': {}})
+        super().delete(request, *args, **kwargs)
+        return Response(status=status.HTTP_200_OK, data={"status": status.HTTP_200_OK, 'meta': {}})

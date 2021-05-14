@@ -13,6 +13,6 @@ class UserDetails(generics.RetrieveAPIView):    # User detail view
         pk = self.kwargs.get('pk')
         user = User.objects.get(pk=pk)
         serializer = users_serializer.UserSerializer(user)
-        return Response({"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
+        return Response(status=status.HTTP_200_OK, data={"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
 
 

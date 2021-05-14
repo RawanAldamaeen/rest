@@ -13,7 +13,11 @@ class UserUpdate(APIView):  # Update user data view
 
     def put(self, request, *args, **kwargs):    # Perform PUT request
         data = request.data
-        user = User.objects.get(username=data["username"])
+        pk = self.kwargs.get('pk')
+        user = User.objects.get(pk=pk)
+
+        if user != request.user:
+            return Response(status=status.HTTP_403_FORBIDDEN, data={"status": status.HTTP_403_FORBIDDEN, 'message': ('your not allowed to update this profile'), 'meta': {}})
 
         user.username = data['username']
         user.password = data['password']
@@ -23,12 +27,15 @@ class UserUpdate(APIView):  # Update user data view
 
         serializer = update_user_serializer.UpdateUserSerializer(user)
 
-        return Response({"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
+        return Response(status=status.HTTP_200_OK, data={"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
 
     def patch(self, request, *args, **kwargs):    # Perform PATCH request
         data = request.data
         pk = self.kwargs.get('pk')
         user = User.objects.get(pk=pk)
+
+        if user != request.user:
+            return Response(status=status.HTTP_403_FORBIDDEN, data={"status": status.HTTP_403_FORBIDDEN, 'message': ('your not allowed to update this profile'), 'meta': {}})
 
         user.username = data.get('username', user.username)
         user.password = data.get('password', user.password)
@@ -38,4 +45,4 @@ class UserUpdate(APIView):  # Update user data view
 
         serializer = update_user_serializer.UpdateUserSerializer(user)
 
-        return Response({"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
+        return Response(status=status.HTTP_200_OK, data={"status": status.HTTP_200_OK, "data": serializer.data, 'meta': {}})
