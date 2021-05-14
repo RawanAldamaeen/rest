@@ -1,0 +1,15 @@
+
+rest/__pycache__/*
+users/__pycache__/*
+post/__pycache__/*
+
+users/migrations/__pycache__/*
+users/serializers/__pycache__/*
+users/views/__pycache__/*
+
+post/migrations/__pycache__/*
+post/serializers/__pycache__/*
+post/view/__pycache__/*
+post/models/__pycache__/*
+
+rest/.env
