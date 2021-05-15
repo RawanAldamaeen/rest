@@ -2,7 +2,7 @@
 rest/__pycache__/*
 users/__pycache__/*
 post/__pycache__/*
-comments/__pucache__/*
+comments/__pycache__/*
 
 users/migrations/__pycache__/*
 users/serializers/__pycache__/*
@@ -14,8 +14,8 @@ post/view/__pycache__/*
 post/models/__pycache__/*
 
 comments/migrations/__pycache__/*
-comments/serializers/__pycache__/*
-comments/view/__pycache__/*
+comments/serializer/__pycache__/*
+comments/views/__pycache__/*
 comments/models/__pycache__/*
 
 
