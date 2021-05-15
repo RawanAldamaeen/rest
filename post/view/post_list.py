@@ -4,6 +4,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from post.serializers import post_list_serializer
 from post.models.post import Post
+from comments.models.comment import Comment
 
 
 class PostPagination(pagination.PageNumberPagination):     # post list pagination settings
