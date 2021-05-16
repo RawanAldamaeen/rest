@@ -15,8 +15,6 @@ class CommentUpdate(APIView):  # Update comment data view
         data = request.data
         pk = self.kwargs.get('pk')
         comment = Comment.objects.get(pk=pk)
-        print(request.user.username)
-        print(comment.name)
         if comment.name != request.user.username:
             return Response(status=status.HTTP_403_FORBIDDEN, data={"status": status.HTTP_403_FORBIDDEN, 'message': ('your not allowed to modify this comment'), 'meta': {}})
 
